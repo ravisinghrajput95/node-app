@@ -6,9 +6,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-       
+  Build:
+    runs-on: ubuntu-latest  
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js 
@@ -20,19 +19,44 @@ jobs:
       
     - name: Install dependencies    
       run: npm install
-      
-    - name: Run Tests
-      run: npm test
-      
-    - name: Docker login
-      env: 
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+  
+  Test:
+    runs-on: ubuntu-latest  
+    needs: [Build]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: npm test
+  
+  Docker-push:
+    runs-on: ubuntu-latest  
+    needs: [Test]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker login
+        env: 
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
    
-    - name: Docker build
-      run: docker build . --file Dockerfile --tag rajputmarch2020/node-app:$GITHUB_SHA
+      - name: Docker build
+        run: docker build . --file Dockerfile --tag rajputmarch2020/node-app:$GITHUB_SHA
       
-    - name: Docker Push
-      run: docker push "rajputmarch2020/node-app:$GITHUB_SHA"
+      - name: Docker Push
+        run: docker push "rajputmarch2020/node-app:$GITHUB_SHA"
+  
+  Deploy:
+    runs-on: ubuntu-latest  
+    needs: [Build]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          email: ${{secrets.HEROKU_EMAIL}}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
