@@ -11,7 +11,8 @@
     "jest": "^22.4.3"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "testURL": "http://localhost/"
   },
   "author": "",
   "license": "ISC"
