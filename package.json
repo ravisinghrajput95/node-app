@@ -1,5 +1,5 @@
 {
-  "name": "node.js-ci-cd",
+  "name": "node-app",
   "version": "1.0.0",
   "scripts": {
     "start": "node src/index.js",
