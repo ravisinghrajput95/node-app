@@ -10,6 +10,9 @@
     "supertest": "^6.1.6",
     "jest": "^22.4.3"
   },
+  "jest": {
+  "verbose": true,
+  },
   "author": "",
   "license": "ISC"
 }
