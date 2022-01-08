@@ -44,7 +44,7 @@ jobs:
     needs: [Build]
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to Heroku
+      - name: Deploy
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
