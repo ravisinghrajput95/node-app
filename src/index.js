@@ -1,10 +1,12 @@
-const express = require('express');
-const port = process.env.port || 8000;
+const express = require("express");
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// Respond with "hello world" for requests that hit our root "/"
+app.get("/", function (req, res) {
+  return res.send("Hello World");
 });
-
-app.listen(port, () => { console.log('Our App Is Up And Running!'); });
-module.exports = app
+// listen to port 7000 by default
+app.listen(process.env.PORT || 7000, () => {
+  console.log("Server is running");
+});
+module.exports = app;
