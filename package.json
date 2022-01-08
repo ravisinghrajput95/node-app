@@ -2,7 +2,8 @@
   "name": "node.js-ci-cd",
   "version": "1.0.0",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "jest src/app.test.js"
   },
   "dependencies": {
     "express": "^4.17.2",
