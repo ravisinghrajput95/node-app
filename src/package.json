@@ -1,0 +1,14 @@
+{
+  "name": "node.js-ci-cd",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "supertest": "^6.1.6",
+    "jest": "^22.4.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
